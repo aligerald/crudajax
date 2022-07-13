@@ -211,7 +211,8 @@
                 },
                 datebirthper: {
                     required: true,
-                    date: true
+                    date: true,
+                    max: "2004-12-31"
                 },
                 addressper: {
                     required: true
@@ -240,7 +241,8 @@
                 },
                 datebirthper: {
                     required: "Por favor ingrese su fecha de nacimeinto",
-                    date: "Ingrese una fecha valida"
+                    date: "Ingrese una fecha valida",
+                    max: "No eres mayor de edad"
                 },
                 addressper: {
                     required: "Por favor ingrese su dirección"
