@@ -9,14 +9,62 @@
     <link href="./src/bootstrap.min.css" rel="stylesheet">
     <script src="./src/bootstrap.bundle.min.js"></script>
     <script src="./src/jquery.min.js"></script>
+    <script src="./src/jquery.validate.js"></script>
     <title>FRONT</title>
 </head>
+
+<style>
+    input {
+        outline: none;
+    }
+
+    label.error {
+        color: darkred;
+    }
+
+    input.error {
+        border: 1px solid darkred;
+    }
+</style>
 
 <body>
     <div class="container">
         <h1>Personas</h1>
-        <button name="insertperson" id="insertperson" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar"><i class="fa-solid fa-plus"></i></button>
+        <div class="container mt-2">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#forModal"><i class="fa-solid fa-plus"></i></button>
+            <div class="modal fade" id="forModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar Persona</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="insertar.php" id="formajax" method="POST">
+                                <label for="nameper">Nombre</label>
+                                <input id="nameper" name="nameper" class="m-2" /><br>
+                                <label for="lastnameper">Apellido</label>
+                                <input id="lastnameper" name="lastnameper" class="m-2" /><br>
+                                <label for="datebirthper">Fecha de Nacimiento</label>
+                                <input type="date" id="datebirthper" name="datebirthper" class="m-2" /><br>
+                                <label for="addressper">Dirección</label>
+                                <input id="addressper" name="addressper" class="m-2" /><br>
+                                <label for="phoneper">Teléfono</label>
+                                <input id="phoneper" name="phoneper" class="m-2" /><br>
+                                <label for="emailper">Correo Electrónico</label>
+                                <input id="emailper" name="emailper" class="m-2" /><br>
+                                <button type="submit" id="insert_confirmm" class="btn btn-primary">Confirmar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="insert_cancell" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <button name="insertperson" id="insertperson" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar"><i class="fa-solid fa-plus"></i></button>
         <table id="tableajax" class="table table-striped">
             <thead>
                 <tr>
@@ -36,6 +84,7 @@
 </body>
 
 </html>
+
 <script type="application/javascript">
     function addRow(row) {
         let tableajaxbody = $('#tableajax>tbody');
@@ -88,7 +137,6 @@
                 phone_per: row.find('input[name="phone_per"]').val(),
                 email_per: row.find('input[name="email_per"]').val(),
             }
-
             $.ajax('back.php?id_per=' + id_per, {
                 method: 'PUT',
                 data: data,
@@ -146,6 +194,66 @@
             $.each(results, function(i, row) {
                 addRow(row);
             });
+        });
+        $("#formajax").validate({
+            rules: {
+                nameper: {
+                    required: true,
+                    isLetters: true,
+                    minlength: 3,
+                    maxlength: 30
+                },
+                lastnameper: {
+                    required: true,
+                    isLetters: true,
+                    minlength: 3,
+                    maxlength: 30
+                },
+                datebirthper: {
+                    required: true,
+                    date: true
+                },
+                addressper: {
+                    required: true
+                },
+                phoneper: {
+                    required: true,
+                    number: true
+                },
+                emailper: {
+                    required: true,
+                    email: true
+                },
+            },
+            messages: {
+                nameper: {
+                    required: "Por favor ingrese su nombre",
+                    isLetters: "Por favor ingrese un nombre correcto",
+                    minlength: "Ingrese un nombre valido",
+                    maxlength: "Ingrese un nombre valido"
+                },
+                lastnameper: {
+                    required: "Por favor ingrese su apellido",
+                    isLetters: "Por favor ingrese un apellido correcto",
+                    minlength: "Ingrese un apellido valido",
+                    maxlength: "Ingrese un apellido valido"
+                },
+                datebirthper: {
+                    required: "Por favor ingrese su fecha de nacimeinto",
+                    date: "Ingrese una fecha valida"
+                },
+                addressper: {
+                    required: "Por favor ingrese su dirección"
+                },
+                phoneper: {
+                    required: "Por favor ingrese su teléfono",
+                    email: "Ingrese un teléfono valido"
+                },
+                emailper: {
+                    required: "Por favor ingrese su correo electrónico",
+                    email: "Ingrese un email valido"
+                },
+            },
         });
     });
 

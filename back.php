@@ -7,7 +7,7 @@ $dbname = 'poocrud';
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    // echo "Conexión Exitosa.";
+    // echo "Conexión Exitosa";
 } catch (PDOException $exception) {
     die("Conexión Fallida:" . $exception->getMessage());
 }
@@ -36,20 +36,18 @@ switch (strtolower($_SERVER['REQUEST_METHOD'])) {
                 'phone_per' => $_POST['phone_per'],
                 'email_per' => $_POST['email_per'],
             ]);
-
             echo $conn->lastInsertId();
-            echo "123";
         } catch (PDOException $exception) {
             http_response_code(500);
             die($exception->getMessage());
         }
         break;
+
     case 'delete':
         if (empty($id_per = filter_input(INPUT_GET, 'id_per'))) {
             http_response_code(400);
             die;
         }
-
         $sql = "DELETE FROM persons WHERE id_per = :id_per";
         $st = $conn->prepare($sql);
         try {
@@ -60,6 +58,7 @@ switch (strtolower($_SERVER['REQUEST_METHOD'])) {
             http_response_code(500);
         }
         break;
+
     case 'put':
         if (empty($id_per = filter_input(INPUT_GET, 'id_per'))) {
             http_response_code(400);
