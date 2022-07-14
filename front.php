@@ -14,6 +14,15 @@
 </head>
 
 <style>
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+    a:hover {
+        color: palegreen;
+    }
+
     input {
         outline: none;
     }
@@ -65,6 +74,7 @@
         </div>
 
         <button name="insertperson" id="insertperson" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Agregar"><i class="fa-solid fa-plus"></i></button>
+        <button name="excelperson" id="excelperson" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Descargar"><a href="excel.php"><i class="fa-solid fa-download"></i> Descargar</a></button>
         <table id="tableajax" class="table table-striped">
             <thead>
                 <tr>
